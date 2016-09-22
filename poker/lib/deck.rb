@@ -13,7 +13,7 @@ class Deck
     cards = []
     values.each do |value|
       suits.each do |suit|
-        cards << Card.new(suit, value)
+        cards << Card.new(value, suit)
       end
     end
     cards

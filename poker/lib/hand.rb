@@ -7,7 +7,7 @@ class Hand
   RANK_ORDER = ["straight flush", "four of a kind", "full house", "flush", "straight", "three of a kind", "two pairs", "one pair", "high card"]
   def initialize(cards)
     @cards = cards
-    @rank = nil
+    @rank = set_rank
     sort_cards(@cards)
   end
 
@@ -71,21 +71,22 @@ class Hand
     @cards.map { |card| card.value }
   end
 
-  def high_card
+  def high_card(cards)
     @cards.last
   end
 
   def highest_card?(other_hand)
-    
-    until our_cards.empty?
-      if high_card(our_hand) > other_hand.high_card(other_hand)
+    our_cards = @cards
+    their_cards = other_hand.cards
+
+    @cards.length.times do
+      if high_card(our_cards) > other_hand.high_card(their_cards)
         return true
-      elsif high_card(our_hard) < other_hand.high_card(other_hand)
+      elsif high_card(our_cards) < other_hand.high_card(their_cards)
         return false
       else
-        previous_high_card = high_card(our_hand)
-        our_cards.delete(previous_high_card)
-        their_cards.delete(previous_high_card)
+        our_cards.pop
+        their_cards.pop
       end
     end
   end
@@ -95,12 +96,16 @@ class Hand
     their_cards = other_hand.card_values
 
     if ["straight flush", "straight", "flush", "high card"].include?(@rank)
-      return highest_card?(@cards, other_hand)
+      return highest_card?(other_hand)
     elsif @rank == "full house"
       our_high_card = same_value_cards(our_cards).key(3)
-      their_high_card = same_value_cards(our_cards).key(3)
+      their_high_card = same_value_cards(their_cards).key(3)
 
-      our_high_card > their_high_card ? true : false
+      if our_high_card > their_high_card
+        return true
+      else
+        return false
+      end
     else
       our_high_card = same_value_cards(our_cards).keys.max
       their_high_card = same_value_cards(their_cards).keys.max
@@ -120,7 +125,7 @@ class Hand
     elsif RANK_ORDER.index(@rank) > RANK_ORDER.index(other_hand.rank)
       return false
     else
-      tie_breaker
+      tie_breaker?(other_hand)
     end
   end
 

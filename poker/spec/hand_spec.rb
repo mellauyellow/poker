@@ -5,83 +5,83 @@ require 'card'
 describe Hand do
 
   let(:four_of_a_kind) do
-    [double("card1", :value => "2", :suit => "hearts"),
-    double("card2", :value => "2", :suit => "diamonds"),
-    double("card3", :value => "2", :suit => "clubs"),
-    double("card4", :value => "2", :suit => "spades"),
-    double("card5", :value => "J", :suit => "diamonds")]
+    [Card.new("2", "hearts"),
+    Card.new("2", "diamonds"),
+    Card.new("2", "clubs"),
+    Card.new("2", "spades"),
+    Card.new("J", "diamonds")]
   end
 
   let(:full_house) do
-    [double("card1", :value => "2", :suit => "hearts"),
-    double("card2", :value => "2", :suit => "diamonds"),
-    double("card3", :value => "2", :suit => "clubs"),
-    double("card4", :value => "J", :suit => "spades"),
-    double("card5", :value => "J", :suit => "diamonds")]
+    [Card.new("2", "hearts"),
+    Card.new("2", "diamonds"),
+    Card.new("2", "clubs"),
+    Card.new("J", "spades"),
+    Card.new("J", "diamonds")]
   end
 
   let(:full_house2) do
-    [double("card1", :value => "3", :suit => "hearts"),
-    double("card2", :value => "3", :suit => "diamonds"),
-    double("card3", :value => "3", :suit => "clubs"),
-    double("card4", :value => "J", :suit => "spades"),
-    double("card5", :value => "J", :suit => "diamonds")]
+    [Card.new("3", "hearts"),
+    Card.new("3", "diamonds"),
+    Card.new("3", "clubs"),
+    Card.new("J", "spades"),
+    Card.new("J", "diamonds")]
   end
 
   let(:flush) do
-    [double("card1", :value => "2", :suit => "hearts"),
-    double("card2", :value => "3", :suit => "hearts"),
-    double("card3", :value => "7", :suit => "hearts"),
-    double("card4", :value => "10", :suit => "hearts"),
-    double("card5", :value => "J", :suit => "hearts")]
+    [Card.new("2", "hearts"),
+    Card.new("3", "hearts"),
+    Card.new("7", "hearts"),
+    Card.new("10", "hearts"),
+    Card.new("J", "hearts")]
   end
 
   let(:straight_flush) do
-    [double("card1", :value => "2", :suit => "hearts"),
-    double("card2", :value => "3", :suit => "hearts"),
-    double("card3", :value => "4", :suit => "hearts"),
-    double("card4", :value => "5", :suit => "hearts"),
-    double("card5", :value => "6", :suit => "hearts")]
+    [Card.new("2", "hearts"),
+    Card.new("3", "hearts"),
+    Card.new("4", "hearts"),
+    Card.new("5", "hearts"),
+    Card.new("6", "hearts")]
   end
 
   let(:straight) do
-    [double("card1", :value => "9", :suit => "spades"),
-    double("card2", :value => "Q", :suit => "hearts"),
-    double("card3", :value => "K", :suit => "hearts"),
-    double("card4", :value => "10", :suit => "hearts"),
-    double("card5", :value => "J", :suit => "hearts")]
+    [Card.new("9", "spades"),
+    Card.new("Q", "hearts"),
+    Card.new("K", "hearts"),
+    Card.new("10", "hearts"),
+    Card.new("J", "hearts")]
   end
 
   let(:three_of_a_kind) do
-    [double("card1", :value => "2", :suit => "spades"),
-    double("card2", :value => "2", :suit => "diamonds"),
-    double("card3", :value => "2", :suit => "hearts"),
-    double("card4", :value => "5", :suit => "hearts"),
-    double("card5", :value => "6", :suit => "hearts")]
+    [Card.new("2", "spades"),
+    Card.new("2", "diamonds"),
+    Card.new("2", "hearts"),
+    Card.new("5", "hearts"),
+    Card.new("6", "hearts")]
   end
 
   let(:two_pairs) do
-    [double("card1", :value => "2", :suit => "spades"),
-    double("card2", :value => "2", :suit => "diamonds"),
-    double("card3", :value => "5", :suit => "hearts"),
-    double("card4", :value => "5", :suit => "clubs"),
-    double("card5", :value => "6", :suit => "hearts")]
+    [Card.new("2", "spades"),
+    Card.new("2", "diamonds"),
+    Card.new("5", "hearts"),
+    Card.new("5", "clubs"),
+    Card.new("6", "hearts")]
   end
 
   let(:one_pair) do
-    [double("card1", :value => "2", :suit => "spades"),
-    double("card2", :value => "2", :suit => "diamonds"),
-    double("card3", :value => "9", :suit => "hearts"),
-    double("card4", :value => "5", :suit => "hearts"),
-    double("card5", :value => "6", :suit => "hearts")]
+    [Card.new("2", "spades"),
+    Card.new("2", "diamonds"),
+    Card.new("9", "hearts"),
+    Card.new("5", "hearts"),
+    Card.new("6", "hearts")]
   end
 
   let(:high_card) do
-    [double("card1", :value => "2", :suit => "spades"),
-    double("card2", :value => "K", :suit => "diamonds"),
-    double("card3", :value => "A", :suit => "hearts"),
-    double("card4", :value => "5", :suit => "hearts"),
-    double("card5", :value => "6", :suit => "hearts")]
+    [Card.new("2", "spades"),
+    Card.new("K", "diamonds"),
+    Card.new("A", "hearts"),
+    Card.new("5", "hearts"),
+    Card.new("6", "hearts")]
   end
 
   describe 'initialize' do
@@ -91,8 +91,8 @@ describe Hand do
       expect(hand.cards.count).to eq(5)
     end
 
-    it 'should have no rank set' do
-      expect(hand.rank).to be nil
+    it 'should set rank' do
+      expect(hand.rank).to_not be nil
     end
   end
 
@@ -202,11 +202,11 @@ describe Hand do
 
   describe 'sort' do
     let(:straight2) do
-      [Card.new("spades", "10"),
-        Card.new("hearts", "K"),
-        Card.new("spades", "J"),
-        Card.new("clubs", "9"),
-        Card.new("diamonds", "Q")]
+      [Card.new("10", "spades"),
+        Card.new("K", "hearts"),
+        Card.new("J", "spades"),
+        Card.new("9", "clubs"),
+        Card.new("Q", "diamonds")]
     end
     subject(:hand) { Hand.new(straight2) }
     it 'sorts cards by highest values first' do
