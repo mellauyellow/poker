@@ -8,7 +8,12 @@ describe Card do
       expect(card.value).to eq("2")
       expect(card.suit).to eq("hearts")
     end
+  end
 
-    
+  let(:card2) { Card.new("hearts", "A") }
+  describe '<=>' do
+    it 'should compare two card values based on index' do
+      expect(card < card2).to be true
+    end
   end
 end
